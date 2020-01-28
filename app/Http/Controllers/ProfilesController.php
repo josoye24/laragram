@@ -3,95 +3,55 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\User;
+use App\Post;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Cache;
+
 
 class ProfilesController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth')->except("index");
+        $this->middleware('auth');
     }
 
 
     public function index(User $user)
     {
-        //the line below = ($user) is comment out since we now use route model binding,
-        //which can replace find or faill 
-        //$user = User::findORFail($user);
+        
 
         $follows = (auth()->user()) ? auth()->user()->following->contains($user->id) : false;
+
+        $users = $user;
+
+        $profilePost = Auth::user()->posts()->latest("created_at")->paginate(15);
         
-        $postCount = Cache::remember(
-            'count.post' .$user->id, 
+
+        $usersPostCount = Cache::remember(
+            'users.count.post' .$users->id, 
             now()->addMinutes(30), 
-            function () use ($user) {
-            return $user->posts->count();
+            function () use ($users) {
+            return $users->posts->count();
         }); 
 
-        $followerCount = Cache::remember(
-            'count.follower' .$user->id, 
+        $usersFollowerCount = Cache::remember(
+            'users.follower' .$users->id, 
             now()->addMinutes(30), 
-            function () use ($user) {
-            return $user->profile->followers->count();
+            function () use ($users) {
+            return $users->profile->followers->count();
         }); 
-        
-        
-        $followingCount = Cache::remember(
-            'count.following' .$user->id, 
+
+        $usersFollowingCount = Cache::remember(
+            'users.following' .$users->id, 
             now()->addMinutes(30), 
-            function () use ($user) {
-            return $user->following->count();
+            function () use ($users) {
+            return $users->following->count();
         });
-
-        return view('profiles.index', compact("user", "follows", "postCount", "followerCount", "followingCount"));
-    }
-
-
-    public function edit(User $user)
-    {
-        $this->authorize("update", $user->profile);
-
-        return view('profiles.edit', compact("user"));
-    }
-    
-    
-    public function update(User $user)
-    {
-
-        $this->authorize("update", $user->profile);
-
-        $data = request()->validate([
-            "title" => "required",
-            "description" => "required",
-            "url" => "url",
-            "image" => "image"
-        ]);
-
-
-        if (request("image")){
-
-            $imagePath = request("image")->store("profile", "public");
-
-            //resize and fit image using intervention image library
-            $image = Image::make(public_path("storage/{$imagePath}"))->fit(1000, 1000);
-            $image->save();
-
-            $imageArray = ["image" => $imagePath];
-
-        }
-        
-        //update profiel with auth user ID
-        auth()->user()->profile->update(array_merge(
-            $data, $imageArray ?? []
-        ));
-
-        
-
-        return redirect("/profile/" . auth()->user()->username);
-
+       
+        return view('profiles.index', compact("follows", "users", "user", "usersPostCount", "usersFollowerCount", "usersFollowingCount", "profilePost"));
     }
 
 

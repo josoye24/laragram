@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\User;
+use Illuminate\Http\Request;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
+
 
 class ProfileController extends Controller
 {
@@ -26,6 +31,11 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request)
     {
+        $this->validate(request(),[
+            "name" => "required|min:2",
+            "username" => "required|min:3",
+            "email" => "required|email"
+        ]);
         auth()->user()->update($request->all());
 
         return back()->withStatus(__('Profile successfully updated.'));
@@ -43,4 +53,43 @@ class ProfileController extends Controller
 
         return back()->withPasswordStatus(__('Password successfully updated.'));
     }
+
+    public function info(Request $request)
+    {
+        $user = Auth::user(); 
+
+        $this->authorize("update", $user->profile);
+
+        $data = request()->validate([
+            "bio" => "required|min:3",
+            "location" => "",
+            "profession" => "",
+            "website" => "url",
+            "image" => "image"
+        ]);
+
+
+        if (request("image")){
+
+            $imagePath = request("image")->store("profile", "public");
+
+            //resize and fit image using intervention image library
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(1000, 1000);
+            $image->save();
+
+            $imageArray = ["image" => $imagePath];
+
+        }
+        
+        //update profiel with auth user ID
+        auth()->user()->profile->update(array_merge(
+            $data, $imageArray ?? []
+        ));
+
+        
+
+        return back()->withinfo_status(__('Profile successfully updated.'));
+
+    }
+
 }

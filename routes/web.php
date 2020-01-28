@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
 Auth::routes();
@@ -24,23 +21,24 @@ Route::get('mail', function () {
 });
 
 
+//Route::patch('/profile', 'ProfilesController@update')->name('profile.info');
+//Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
+//Route::get('/home', 'HomeController@index');
 
-Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');
-Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
-Route::patch('/profile/{user}/edit', 'ProfilesController@update')->name('profile.update');
 
-//Route::get('/', 'PostsController@index');
+Route::get('/', 'PostsController@index')->name('home');
 Route::get('/p/create', 'PostsController@create');
 Route::post('/p/create', 'PostsController@store');
-Route::get('/p/{post}', 'PostsController@show');
+Route::get('/p/{slug}', 'PostsController@show');
 
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+	Route::put('profile/edit', ['as' => 'profile.edit.info', 'uses' => 'ProfileController@info']);
 });
 
+Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');
