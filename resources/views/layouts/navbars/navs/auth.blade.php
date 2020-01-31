@@ -34,11 +34,11 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-                    <a href="{{ route('profile.edit') }}" class="dropdown-item">
+                    <a href="/profile/{{ $user->username}}" class="dropdown-item">
                         <i class="ni ni-single-02"></i>
                         <span>{{ __('Profile') }}</span>
                     </a>
-                    <a href="#" class="dropdown-item">
+                    <a href="{{ route('profile.edit') }}" class="dropdown-item">
                         <i class="ni ni-settings-gear-65"></i>
                         <span>{{ __('Settings') }}</span>
                     </a>
@@ -54,15 +54,3 @@
     </div>
 </nav>
 
-<style>
-    #fontAwsome {
-        color:#a6adba;
-    } 
-    
-    #fontAwsome:hover {
-        color:#525f7f;
-    }
-
- 
-
-</style>

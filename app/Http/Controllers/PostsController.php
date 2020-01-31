@@ -8,7 +8,8 @@ use Auth;
 use App\User;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 
 
@@ -23,14 +24,19 @@ class PostsController extends Controller
 
     public function index()
     {
-        //$users = auth()->user()->following()->pluck("profiles.user_id");
-        $users = auth()->user();
+        $users = auth()->user()->following()->pluck("profiles.user_id");
         $posts = Post::whereIn("user_id", $users)->with("user")->latest("created_at")->paginate(5);
-        $stories = Post::inRandomOrder()->limit(4)->get();
         $newFollowers = User::inRandomOrder()->limit(5)->get();
+        $stories = Post::inRandomOrder()->limit(4)->get();
 
+        foreach ($newFollowers as $followers) {
+            $followersID = $followers->id;
+        }
+
+        $follows = (auth()->user()->following->contains($followersID) ? true : false);
+        Session::put("follows", $follows);
         
-        return view("posts.index", compact("posts", "stories", "newFollowers", "users"));
+        return view("posts.index", compact("posts", "stories", "newFollowers", "follows"));
         
     }
 
@@ -44,9 +50,9 @@ class PostsController extends Controller
     public function store()
     {
         $data = request()->validate([
-            "caption" => "required",
+            "caption" => "required|min:3",
             "slug" => "",
-            "image" => "required|image"
+            "image" => "required|image|mimes:jpeg,png,jpg|size:1024"
         ]);        
 
         //store image to public directory
@@ -80,8 +86,9 @@ class PostsController extends Controller
     public function show(Post $slug)
     {
         $post = $slug;
+        $follows = Session::get("follows");
 
-        return view("posts.show", compact("post"));
+        return view("posts.show", compact("post", "follows"));
 
     }
 }

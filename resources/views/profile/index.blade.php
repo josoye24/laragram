@@ -1,12 +1,13 @@
+
 @extends('layouts.app')
 
 @section('content')
-@include('layouts.headers.cards')
-    
+@include('layouts.headers.cards')    
 
 <div class="container-fluid mt--7">
     <div class="row">
         <div class="col-xl-8 mb-5 mb-xl-0">
+
             @if (session('post_status'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('post_status') }}
@@ -21,7 +22,7 @@
                 <div class="row align-items-center">
 
                     @foreach ($profilePost as $post)
-                        <div class="col-xl-4 col-sm mb-4">
+                        <div class="col-xl-4 col-sm-6 mb-4">
                             <a href = "/p/{{ $post->slug}}">
                             <img src="/storage/{{$post->image}}" alt="img" class="w-100" style="border-radius: 5%">
                             </a>
@@ -54,17 +55,18 @@
                     <h2 class="mb-1">{{ $users->name }}</h2>
                     <div class="text-center d-inline-flex align-items-baseline">
                         <h5 class="text-muted mr-3"> @ {{ $users->username }} </h5>
+
                         <!-- Follow Button using VueJS-->
                         @if (Gate::allows('update', $user->profile)) 
                             <a href="{{ route('profile.edit') }}" class="btn btn-sm btn-primary mb-2">Edit Profile</a>    
                         @else    
-                            <a href="#" class="btn btn-sm btn-primary mb-2">Follow</a>    
+                            <follow-button user-username="{{ $user->username }}" follows="{{ $follows}}"></follow-button>   
                         @endif
 
                             
                         
                     </div>    
-                    <div class="d-inline-flex ">
+                    <div class="d-inline-flex mb-4">
                         <h4> {{ $usersPostCount }} <h4 class="font-weight-normal text-muted pl-1 mr-4 "> Posts </h4></h4>
                         <h4> {{ $usersFollowerCount }} <h4 class="font-weight-normal text-muted pl-1 mr-4"> Followers </h4></h4>
                         <h4> {{ $usersFollowingCount }} <h4 class="font-weight-normal text-muted pl-1"> Following </h4></h4>

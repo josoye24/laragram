@@ -9,10 +9,55 @@ use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Cache;
 
 
 class ProfileController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
+    public function index(User $user)
+    {
+        
+
+        $follows = (auth()->user()->following->contains($user->id) ? true : false);
+
+        $users = $user;
+
+        $profilePost = Auth::user()->posts()->latest("created_at")->paginate(15);
+        
+
+        $usersPostCount = Cache::remember(
+            'users.count.post' .$users->id, 
+            now()->addSecond(5), 
+            function () use ($users) {
+            return $users->posts->count();
+        }); 
+
+        $usersFollowerCount = Cache::remember(
+            'users.follower' .$users->id, 
+            now()->addSecond(5), 
+            function () use ($users) {
+            return $users->profile->followers->count();
+        }); 
+
+        $usersFollowingCount = Cache::remember(
+            'users.following' .$users->id, 
+            now()->addSecond(5), 
+            function () use ($users) {
+            return $users->following->count();
+        });
+       
+        return view('profile.index', compact("follows", "users", "user", "usersPostCount", "usersFollowerCount", "usersFollowingCount", "profilePost"));
+    }
+
+
+    
     /**
      * Show the form for editing the profile.
      *
@@ -32,7 +77,7 @@ class ProfileController extends Controller
     public function update(ProfileRequest $request)
     {
         $this->validate(request(),[
-            "name" => "required|min:2",
+            "name" => "required|min:3",
             "username" => "required|min:3",
             "email" => "required|email"
         ]);

@@ -49,8 +49,11 @@ class User extends Authenticatable
         parent::boot(); 
         static::created(function ($user){
             $user->profile()->create([
-                "title" => $user->username,
-                "image" => "profile/DwcK1Ekb7kBCO1hC6RjDtIcCAwKansam87bKZW85.jpeg"
+                "bio" => "About me",
+                "location" => "City",
+                "profession" => "Profession",
+                "website"=> "https://laragram.ziontech.com.ng",
+                "image" => "profile/CljhJRj7hWJCUyf2jtUVEXN2DTHSb1oHb0Bdu7dd.jpeg"
             ]);
 
             Mail::to($user->email)->send(new NewWelcomeMail());

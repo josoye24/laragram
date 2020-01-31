@@ -8,7 +8,7 @@
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
             <div class="d-flex justify-content-center mt-4">
                 <div><img src="/asset/instagram-logo.png" alt="logo text" style="height:25px; border-right:1px solid" class="pr-3 pt-1"> </div>
-                <div><img src="/asset/instagram-logo-text.png" alt="logo" style="height:40px" class="pl-3"> </div>
+                <div><img src="/asset/laragram.png" alt="logo" style="height:40px" class="pl-3"> </div>
             </div>
         </a>
         <!-- User -->
@@ -23,7 +23,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
 
-                    <a href="/profile/{{$user->username}}" class="dropdown-item">
+                    <a href="/p/create" class="dropdown-item">
                         <i class="fa fa-edit"></i>
                         <span>{{ __('Create New Post') }}</span>
                     </a>                    

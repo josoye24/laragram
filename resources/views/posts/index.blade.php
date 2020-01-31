@@ -41,9 +41,12 @@
                                         <span class="text-dark"> {{$post->username}} </span>
                                     </a> 
                                 </div>  {{$post->caption}}
-                                
                             </div>
                         @endforeach
+                        
+                        @empty($post)
+                            <div class="col">No post to show, follow users to get post</div>
+                        @endempty
             
                         <div class="justify-content-center">
                             <div class="col">
@@ -60,6 +63,7 @@
         </div>
 
         <!--New Followers-->
+        
         <div class="col-xl-4">
             <h2 class="mb-3 text-muted">New Followers</h2>
             @foreach ($newFollowers as $followers)
@@ -73,9 +77,9 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <a href="/profile/{{$followers->username}}"> <span class="text-dark"> {{ $followers->name }} </span>
-                                <br><span class="text-dark"> {{ $followers->username }} </span> </a>
+                                <br><small class="text-muted"> @ {{ $followers->username }} </small> </a>
                             </div>
-                            <a href="#" class="btn btn-sm btn-primary pl-3 pr-3 ">Follow</a>
+                             <follow-button user-username="{{ $followers->username }}" follows="{{ $follows }}"></follow-button>
                         </div>
                     </div>    
                 </div>

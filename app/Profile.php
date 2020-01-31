@@ -44,7 +44,7 @@ class Profile extends Model
         
         $postCount = Cache::remember(
             'count.post' .$user->id, 
-            now()->addMinutes(30), 
+            now()->addSecond(5), 
             function () use ($user) {
             return $user->posts->count();
         }); 
@@ -58,7 +58,7 @@ class Profile extends Model
         
         $followerCount = Cache::remember(
             'count.follower' .$user->id, 
-            now()->addMinutes(30), 
+            now()->addSecond(5), 
             function () use ($user) {
             return $user->profile->followers->count();
         }); 
@@ -73,7 +73,7 @@ class Profile extends Model
         
         $followingCount = Cache::remember(
             'count.following' .$user->id, 
-            now()->addMinutes(30), 
+            now()->addSecond(5), 
             function () use ($user) {
             return $user->following->count();
         });

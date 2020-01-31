@@ -21879,3 +21879,11 @@ html:not([dir='rtl']) .noUi-horizontal .noUi-handle
     border: 2px solid #fff;
     box-shadow: 0 0 0 2px #f5365c;
 }
+
+#fontAwsome {
+    color:#a6adba;
+} 
+
+#fontAwsome:hover {
+    color:#525f7f;
+}

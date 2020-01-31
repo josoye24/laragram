@@ -1,10 +1,10 @@
 @component('mail::message')
-# Welcome to Joseph Laravel clone
+# Welcome to Laragram
 
-This is a forum community for developers, we love that you joined us.
+We love that you joined us.
 
 
-@component('mail::button', ['url' => "http://127.0.0.1:8000" ])
+@component('mail::button', ['url' => "laragram.com" ])
 View your Profile
 @endcomponent
 

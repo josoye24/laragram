@@ -1,19 +1,16 @@
 <template>
     <div>
-           
-        <button class="btn btn-primary ml-4" @click="followUser" v-text="buttonText"></button>
-
+        <button class="btn btn-sm btn-primary mb-2" @click="followUser" v-text="buttonText"></button>
     </div>
 </template>
 
 <script>
     export default {
 
-        mounted() {
-            console.log('Component mounted.')
+    props: ["userUsername", "follows",],
+    mounted() {
+        console.log('Component mounted.')
         },
-
-    props: ["userUsername", "follows"],
 
     data: function() {
         return {
@@ -27,7 +24,12 @@
                 .then(response => {
                    this.status = ! this.status;                   
                    console.log(response.data);
-                });
+                })
+                .catch(errors => {
+                    if (errors.response.status == 401) {
+                    window.location = "/login";
+                }
+            });
         }
     }, 
 
@@ -36,10 +38,6 @@
             return (this.status) ? "Unfollow" : "Follow";
         }
     }
-    
-
-
-}
-
+};
 
 </script>

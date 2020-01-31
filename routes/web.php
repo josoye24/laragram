@@ -21,16 +21,10 @@ Route::get('mail', function () {
 });
 
 
-//Route::patch('/profile', 'ProfilesController@update')->name('profile.info');
-//Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
-//Route::get('/home', 'HomeController@index');
-
-
 Route::get('/', 'PostsController@index')->name('home');
 Route::get('/p/create', 'PostsController@create');
 Route::post('/p/create', 'PostsController@store');
 Route::get('/p/{slug}', 'PostsController@show');
-
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -41,4 +35,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/edit', ['as' => 'profile.edit.info', 'uses' => 'ProfileController@info']);
 });
 
-Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');
+Route::get('/profile/{user}', 'ProfileController@index')->name('profile.show');
+Route::post('follow/{user}', 'FollowsController@store');

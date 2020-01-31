@@ -14,11 +14,11 @@
                 <div class="pr-3">
                     <img src="/storage/{{$post->user->profile->image}}" alt="img" class="rounded-circle w-100" style="max-width: 40px" >
                 </div>
-                <div class="font-weight-bold">
+                <div class="font-weight-bold d-flex">
                     <a href="/profile/{{ $post->user->username}}">
-                    <span class="text-dark"> {{ $post->user->username }} </span> 
-                    </a> |
-                    <a href="#" class="pl-3">Follow</a>
+                    <span class="text-dark mr-3"> {{ $post->user->username }} </span> 
+                    </a>
+                    <follow-button user-username="{{ Auth::user()->username }}" follows="{{ $follows}}"></follow-button>   
                 </div>
             </div>    
             
