@@ -91,7 +91,7 @@
                     @endif
 
                     @if (!empty ($users->profile->website))
-                        <div class="pt-4"> <strong> Website </strong> <br> <a href="//{{ $users->profile->website }}" >{{ $users->profile->website }}</a></div>
+                        <div class="pt-4"> <strong> Website </strong> <br> <a href="{{ $users->profile->website }}" >{{ $users->profile->website }}</a></div>
                     @endif
 
                 </div>
