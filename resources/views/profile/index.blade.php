@@ -30,6 +30,10 @@
                         </div>
                     @endforeach
 
+                    @empty($post)
+                            <div class="col">No post to show, post someting to show here</div>
+                    @endempty
+
                 </div>
             </div>
             
@@ -53,7 +57,7 @@
                 
                 <div class="col text-center">
                     <h2 class="mb-1">{{ $users->name }}</h2>
-                    <div class="text-center d-inline-flex align-items-baseline">
+                    <div class="justify-content-center align-items-center d-flex ">
                         <h5 class="text-muted mr-3"> @ {{ $users->username }} </h5>
 
                         <!-- Follow Button using VueJS-->

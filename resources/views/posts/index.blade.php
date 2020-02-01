@@ -71,7 +71,7 @@
 
                 <div class="row align-items-center">
                     <div class="pl-3 pr-1" >
-                        <img src="/storage/profile/DwcK1Ekb7kBCO1hC6RjDtIcCAwKansam87bKZW85.jpeg" alt="img" class="rounded-circle w-100" id="ProfileCircleSmall" style="max-width: 45px" >
+                        <img src="/storage/{{$followers->profile->image}}" alt="img" class="rounded-circle w-100" id="ProfileCircleSmall" style="max-width: 45px" >
                     </div>
                     <div class="div col-9">
                         <div class="d-flex justify-content-between align-items-center">

@@ -52,7 +52,7 @@ class PostsController extends Controller
         $data = request()->validate([
             "caption" => "required|min:3",
             "slug" => "",
-            "image" => "required|image|mimes:jpeg,png,jpg|size:1024"
+            "image" => "required|image|mimes:jpeg,png,jpg|max:3000"
         ]);        
 
         //store image to public directory

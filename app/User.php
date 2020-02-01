@@ -56,7 +56,7 @@ class User extends Authenticatable
                 "image" => "profile/CljhJRj7hWJCUyf2jtUVEXN2DTHSb1oHb0Bdu7dd.jpeg"
             ]);
 
-            Mail::to($user->email)->send(new NewWelcomeMail());
+            //Mail::to($user->email)->send(new NewWelcomeMail());
         });
         
         

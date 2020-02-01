@@ -35,26 +35,23 @@
                         <div style="position:relative;">
                             <a class='btn btn-primary' href='javascript:;'>
                                 Choose File...
-                                <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="image" onchange='$("#upload-file-info").html($(this).val());' required>
+                                <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="image" onchange='$("#upload-file-info").html($(this).val());' value="{{ old('image') }}" required>
                             </a>
                             &nbsp;
                             <span class='label label-info' id="upload-file-info"></span>
                         </div>
-
-                        @if ($errors->has('image'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('image') }}</strong>
-                            </span>
-                        @endif
                     </div>
-
+                    @if ($errors->has('image'))
+                        <h5 role="alert" style="color:#fb6340">
+                            <strong>{{ $errors->first('image') }}</strong> 
+                        </h5>
+                    @endif
 
                     <div class="text-center">
                         <button type="submit" class="btn btn-success mt-4">{{ __('Add New Post') }}</button>
                     </div>
                 </div>
             </form>
-            
         </div>
     </div>
     @include('layouts.footers.auth')
