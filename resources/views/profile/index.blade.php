@@ -61,7 +61,7 @@
                         <h5 class="text-muted mr-3"> @ {{ $users->username }} </h5>
 
                         <!-- Follow Button using VueJS-->
-                        @if (Gate::allows('update', $user->profile)) 
+                        @if (Gate::allows('update', $users->profile)) 
                             <a href="{{ route('profile.edit') }}" class="btn btn-sm btn-primary mb-2">Edit Profile</a>    
                         @else    
                             <follow-button user-username="{{ $user->username }}" follows="{{ $follows}}"></follow-button>   

@@ -21,15 +21,15 @@ class ProfileController extends Controller
     }
 
 
-    public function index(User $user)
+    public function index(User $users)
     {
         
 
-        $follows = (auth()->user()->following->contains($user->id) ? true : false);
+        $follows = (auth()->user()->following->contains($users->id) ? true : false);
 
-        $users = $user;
+        $user = Auth::user();
 
-        $profilePost = Auth::user()->posts()->latest("created_at")->paginate(15);
+        $profilePost = $users->posts()->latest("created_at")->paginate(15);
         
 
         $usersPostCount = Cache::remember(

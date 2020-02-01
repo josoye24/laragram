@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 3)->create();
+        factory(App\User::class, 15)->create();
 
         DB::table('users')->insert(
             [
@@ -25,6 +25,17 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'remember_token' => Str::random(10),
+            ]
+        );
+
+        DB::table('profiles')->insert(
+            [
+                'user_id' => "16",
+                'bio' => "My goal is to make every client feel celebrated, I create Classic Pictures that makes the greatest of openings.",
+                "location" => "Lagos, Nigeria",
+                'profession' => "Photographer",
+                'website' => "https://laragram.ziontech.com.ng",
+                'image' => "profile/CljhJRj7hWJCUyf2jtUVEXN2DTHSb1oHb0Bdu7dd.jpeg",
             ]
         );
     }
