@@ -1,5 +1,5 @@
 ## Installation Instructions
-Instagram clone redesign. Based on Laravel 5.8
+Instagram clone redesign. Based on Laravel 5.8 and Vue.JS
 
 
 ## Demo
