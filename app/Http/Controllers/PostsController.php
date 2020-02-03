@@ -8,7 +8,6 @@ use Auth;
 use App\User;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 
@@ -65,7 +64,6 @@ class PostsController extends Controller
 
         //get image file name as slug
         $slug = Str::substr($imagePath, 7, 20);
-
 
         //create post with auth user ID
 
